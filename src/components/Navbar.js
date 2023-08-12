@@ -61,7 +61,11 @@ function Navbar(props) {
             </ul>
           </li>
           */}
+            <Link className="btn btn-primary mx-2 mb-2 mb-lg-0" to="/login" role="button">Log In</Link>
+            <Link className="btn btn-primary mx-2 mb-2 mb-lg-0" to="/signup" role="button">Sign Up</Link>
             </ul>
+            {/* <a class="btn btn-primary mx-2" href="#" role="button">Log In</a>
+            <a class="btn btn-primary mx-2" href="#" role="button">Sign Up</a> */}
             <form className="d-flex" role="search">
               <div className="form-check form-switch ">
                 <input

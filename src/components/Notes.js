@@ -8,6 +8,7 @@ function Notes(props) {
   //Destructure
   const { notes, getNotes, editNote } = context;
 
+ 
   useEffect(() => {
     getNotes();
   }, []);

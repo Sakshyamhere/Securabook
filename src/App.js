@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import NoteState from "./Context/Notes/NoteState";
 import { useState } from "react";
 import Alert from "./components/Alerts";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 function App() {
   const [mode, setmode] = useState("light");
@@ -50,9 +52,15 @@ function App() {
               <Route
                 path="about"
                 element={<About mode={mode} showAlert={showAlert} />}
-              >
-                {" "}
-              </Route>
+              ></Route>
+               <Route
+                path="login"
+                element={<Login mode={mode} showAlert={showAlert} />}
+              ></Route>
+               <Route
+                path="signup"
+                element={<Signup mode={mode} showAlert={showAlert} />}
+              ></Route>
             </Routes>
           </div>
         </BrowserRouter>

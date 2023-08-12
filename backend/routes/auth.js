@@ -26,7 +26,8 @@ const fetchUser = require("../middleware/FetchUser");
 
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        let success = false;
+        return res.status(400).json({success, errors: errors.array() });
       }
 
       //Try and catchError to catch error.
@@ -34,9 +35,10 @@ const fetchUser = require("../middleware/FetchUser");
         //new user or not. There must be Unique email for one and every user.
         let user = await User.findOne({ email: req.body.email });
         if (user) {
+          let success = false;
           return res
             .status(400)
-            .json({ errors: "User already exists by this email." });
+            .json({ success ,errors: "User already exists by this email." });
         }
         //Hash , salt in a password to make it secure.
         const salt = await bcrypt.genSalt(10);
@@ -59,9 +61,11 @@ const fetchUser = require("../middleware/FetchUser");
         const authToken = JWT.sign(data, secrectKey);
 
         // res.json(user);
-        res.json({ authToken });
+        let success = true;
+        res.json({success, authToken });
       } catch (error) {
         //Catch An Error.
+    
         console.error(error.message);
         res.status(500).send("Some error occured");
       }
@@ -90,17 +94,19 @@ const fetchUser = require("../middleware/FetchUser");
         //Find a User with given email
         let user = await User.findOne({ email });
         if (!user) {
+          let success = flase;
           return res
             .status(400)
-            .json({ errors: "Please enter valid credentials." });
+            .json({ success , errors: "Please enter valid credentials." });
         }
 
         //Auth a User with given password
         const authPassword = await bcrypt.compare(password, user.password);
         if (!authPassword) {
+          let success = flase;
           return res
             .status(400)
-            .json({ errors: "Please enter valid credentials." });
+            .json({success , errors: "Please enter valid credentials." });
         }
 
         const data = {
@@ -109,10 +115,12 @@ const fetchUser = require("../middleware/FetchUser");
           },
         };
 
+        let success = true;
         const authToken = JWT.sign(data, secrectKey);
-        res.json({ authToken });
+        res.json({ success , authToken });
       } catch (error) {
         //Catch An Error.
+        
         console.error(error.message);
         res.status(500).send("Internal server error");
       }
