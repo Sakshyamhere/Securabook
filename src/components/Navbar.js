@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar(props) {
+  const navigate = useNavigate();
   const location = useLocation();
+  const handelLogout = () => {
+    localStorage.removeItem('token')
+    navigate("/login")
+  }
   useEffect(() => {}, [location]);
 
   return (
@@ -61,11 +66,38 @@ function Navbar(props) {
             </ul>
           </li>
           */}
-            <Link className="btn btn-primary mx-2 mb-2 mb-lg-0" to="/login" role="button">Log In</Link>
-            <Link className="btn btn-primary mx-2 mb-2 mb-lg-0" to="/signup" role="button">Sign Up</Link>
+          {/* Using condition to show login and logout */}
+
+             
             </ul>
             {/* <a class="btn btn-primary mx-2" href="#" role="button">Log In</a>
             <a class="btn btn-primary mx-2" href="#" role="button">Sign Up</a> */}
+             {!localStorage.getItem("token") ? (
+                <div>
+                  <Link
+                    className="btn btn-primary mx-2 mb-2 mb-lg-0"
+                    to="/login"
+                    role="button"
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    className="btn btn-primary mx-2 mb-2 mb-lg-0"
+                    to="/signup"
+                    role="button"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              ) : (
+                <button
+                  className="btn btn-primary mx-2 mb-2 mb-lg-0"
+                onClick={handelLogout}
+                  role="button"
+                >
+                  Logout
+                </button>
+              )}
             <form className="d-flex" role="search">
               <div className="form-check form-switch ">
                 <input
@@ -82,8 +114,10 @@ function Navbar(props) {
                 >
                   Enable Dark Mode
                 </label>
+
               </div>
             </form>
+          <i class="fa-duotone fa-user"></i>
           </div>
         </div>
       </nav>

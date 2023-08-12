@@ -2,15 +2,22 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import NoteContext from "../Context/Notes/NoteContext";
 import Noteitem from "./Noteitem";
 import Addnote from "./Addnote";
+import { useNavigate } from "react-router-dom";
 
 function Notes(props) {
   const context = useContext(NoteContext);
+  const navigate = useNavigate();
   //Destructure
   const { notes, getNotes, editNote } = context;
 
- 
+
   useEffect(() => {
-    getNotes();
+    if (localStorage.getItem("token")) {
+      getNotes();
+    }
+    else {
+      navigate("/login")
+    }
   }, []);
 
   const { mode } = props;
@@ -43,14 +50,16 @@ function Notes(props) {
   const handelUpdate = (e) => {
     e.preventDefault();
     closeRef.current.click();
-    editNote(note.edittitle,note.editdescription,note.edittag,note.id);
+    editNote(note.edittitle, note.editdescription, note.edittag, note.id);
     props.showAlert("Note Updated", "success");
     console.log(note);
   };
 
+ 
+
   return (
     <div className="container">
-      <Addnote  showAlert={props.showAlert} />
+      <Addnote showAlert={props.showAlert} mode={props.mode} />
 
       <button
         type="button"
@@ -63,14 +72,21 @@ function Notes(props) {
       </button>
 
       <div
-        className="modal fade"
+        className={`modal fade `}
         id="exampleModal"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
+        <div
+          className={`modal-dialog modal-dialog-centered 
+        }`}
+        >
+          <div
+            className={`modal-content my-3 bg-${mode} text-${
+              mode === "dark" ? "light" : "dark"
+            }  mb-2 mb-lg-0 `}
+          >
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 Modal title
@@ -82,8 +98,13 @@ function Notes(props) {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
-              <form>
+            <div>
+              <form
+                className={`container my-3 bg-${mode} text-${
+                  mode === "dark" ? "light" : "dark"
+                }  mb-2 mb-lg-0 `}
+                style={{ padding: "20px", borderRadius: "20px" }}
+              >
                 <div className="mb-3">
                   <label htmlFor="edittitle" className="form-label">
                     Title
@@ -141,7 +162,11 @@ function Notes(props) {
                 type="button"
                 onClick={handelUpdate}
                 className="btn btn-primary"
-                disabled={note.edittitle.length<=2 || note.editdescription.length <=10 || note.edittag ==='' }
+                disabled={
+                  note.edittitle.length <= 2 ||
+                  note.editdescription.length <= 10 ||
+                  note.edittag === ""
+                }
                 required
               >
                 Update Note
@@ -152,7 +177,7 @@ function Notes(props) {
       </div>
       <div className="row">
         <div className="container my-3">
-          {notes.length===0 && 'No notes Available'}
+          {notes.length === 0 && "No notes Available"}
         </div>
         {notes.map((note) => {
           return (

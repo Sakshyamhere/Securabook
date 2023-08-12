@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import NoteContext from "../Context/Notes/NoteContext";
 
 function Addnote(props) {
+  const { mode } = props;
+
   const context = useContext(NoteContext);
   //Destructure
   const { addNote } = context;
@@ -18,17 +20,23 @@ function Addnote(props) {
   const handelSubmit = (e) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
-  setNote({
-    title: "",
-    description: "",
-    tag: "",
-  });
+    setNote({
+      title: "",
+      description: "",
+      tag: "",
+    });
     props.showAlert("Note Added", "success");
   };
 
   return (
-    <div>
+    <div
+      className={`container my-3 bg-${mode} text-${
+        mode === "dark" ? "light" : "dark"
+      }  mb-2 mb-lg-0 `}
+      style={{ padding: "20px", borderRadius: "20px" }}
+    >
       <h1>Your Notes</h1>
+
       <form>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
@@ -76,7 +84,11 @@ function Addnote(props) {
           type="submit"
           className="btn btn-primary"
           onClick={handelSubmit}
-          disabled={note.title.length <= 2 || note.description.length <= 10 || note.tag ===''}
+          disabled={
+            note.title.length <= 2 ||
+            note.description.length <= 10 ||
+            note.tag === ""
+          }
         >
           Add Notes
         </button>

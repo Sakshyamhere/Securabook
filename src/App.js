@@ -45,14 +45,15 @@ function App() {
           <Alert alert={alert} />
           <div className="container my-3">
             <Routes>
-              <Route
+              
+           <Route
                 path="/"
                 element={<Home mode={mode} showAlert={showAlert} />}
               ></Route>
               <Route
                 path="about"
                 element={<About mode={mode} showAlert={showAlert} />}
-              ></Route>
+              ></Route> :
                <Route
                 path="login"
                 element={<Login mode={mode} showAlert={showAlert} />}

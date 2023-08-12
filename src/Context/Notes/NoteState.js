@@ -14,13 +14,11 @@ function NoteState(props) {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRjZmRjYzMxZjkyMDI5MzIzOWYwMWRhIn0sImlhdCI6MTY5MTM0NDU1M30.F7PVkbfgZeYdd6wWPCSW8spomQ_JR8hd38UkzL8rf3c",
+        "Auth-token": localStorage.getItem("token"),
       },
     });
-   const json = await response.json();
-   setNotes(json);
-
+    const json = await response.json();
+    setNotes(json);
   };
 
   const [notes, setNotes] = useState(initialNotes);
@@ -32,36 +30,31 @@ function NoteState(props) {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRjZmRjYzMxZjkyMDI5MzIzOWYwMWRhIn0sImlhdCI6MTY5MTM0NDU1M30.F7PVkbfgZeYdd6wWPCSW8spomQ_JR8hd38UkzL8rf3c",
+        "Auth-token": localStorage.getItem("token"),
       },
 
       body: JSON.stringify({ title, description, tag }),
     });
-   
 
     //Add Logic
-    const noteAdd = await response.json()
+    const noteAdd = await response.json();
     setNotes(notes.concat(noteAdd));
   };
 
   //Del Note
-  const delNote = async(id) => {
+  const delNote = async (id) => {
     //Api Call'
     const response = await fetch(`${host}notes/deletenotes/${id}`, {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRjZmRjYzMxZjkyMDI5MzIzOWYwMWRhIn0sImlhdCI6MTY5MTM0NDU1M30.F7PVkbfgZeYdd6wWPCSW8spomQ_JR8hd38UkzL8rf3c",
+        "Auth-token": localStorage.getItem("token"),
       },
 
       // body: JSON.stringify({}),
-      
     });
 
-    
     //Delete logic
     const deletedNote = notes.filter((note) => {
       return note._id !== id;
@@ -77,14 +70,13 @@ function NoteState(props) {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRjZmRjYzMxZjkyMDI5MzIzOWYwMWRhIn0sImlhdCI6MTY5MTM0NDU1M30.F7PVkbfgZeYdd6wWPCSW8spomQ_JR8hd38UkzL8rf3c",
+        "Auth-token": localStorage.getItem("token"),
       },
 
       body: JSON.stringify({ title, description, tag }),
     });
-    let updatedNotes =  JSON.parse(JSON.stringify(notes))
- 
+    let updatedNotes = JSON.parse(JSON.stringify(notes));
+
     //Logic Edit
     for (let index = 0; index < updatedNotes.length; index++) {
       const element = updatedNotes[index];
@@ -95,7 +87,7 @@ function NoteState(props) {
         break;
       }
     }
-    setNotes(updatedNotes)
+    setNotes(updatedNotes);
   };
 
   return (

@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Signup(props) {
-  const [newUser, setNewUser] = useState({ email: "", password: "", name: "" , cpassword:"" });
-const navigate = useNavigate();
+  const { mode } = props;
+
+  const [newUser, setNewUser] = useState({
+    email: "",
+    password: "",
+    name: "",
+    cpassword: "",
+  });
+  const navigate = useNavigate();
   const handelSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,9 +31,13 @@ const navigate = useNavigate();
     console.log(json);
     if (json.success) {
       //Redirect
-      props.showAlert("Signed In", "success");
       localStorage.setItem("token", json.authToken);
+      props.showAlert("Account Signed In", "success"); 
       navigate("/");
+     
+    }
+    else {
+        props.showAlert("Invalid Credentials", "warning")
     }
   };
 
@@ -35,7 +46,12 @@ const navigate = useNavigate();
   };
 
   return (
-    <div>
+    <div
+      className={`container my-3 bg-${mode} text-${
+        mode === "dark" ? "light" : "dark"
+      }  mb-2 mb-lg-0 `}
+      style={{ padding: "20px", borderRadius: "20px" }}
+    >
       <h1>Sign Up</h1>
       <form onSubmit={handelSubmit}>
         <div className="mb-3">
@@ -51,9 +67,6 @@ const navigate = useNavigate();
             onChange={handelOnChange}
             required
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputName" className="form-label">
@@ -67,7 +80,7 @@ const navigate = useNavigate();
             aria-describedby="emailHelp"
             onChange={handelOnChange}
             required
-          minLength={5}
+            minLength={5}
           />
         </div>
         <div className="mb-3">
@@ -99,7 +112,14 @@ const navigate = useNavigate();
           />
         </div>
 
-        <button disabled={newUser.password.length<8 || newUser.password!==newUser.cpassword} type="submit" className="btn btn-primary">
+        <button
+          disabled={
+            newUser.password.length < 8 ||
+            newUser.password !== newUser.cpassword
+          }
+          type="submit"
+          className="btn btn-primary"
+        >
           Sign Up
         </button>
       </form>

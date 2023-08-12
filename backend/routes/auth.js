@@ -38,7 +38,7 @@ const fetchUser = require("../middleware/FetchUser");
           let success = false;
           return res
             .status(400)
-            .json({ success ,errors: "User already exists by this email." });
+            .json({ success , errors: "User already exists by this email." });
         }
         //Hash , salt in a password to make it secure.
         const salt = await bcrypt.genSalt(10);
@@ -67,7 +67,7 @@ const fetchUser = require("../middleware/FetchUser");
         //Catch An Error.
     
         console.error(error.message);
-        res.status(500).send("Some error occured");
+        res.status(500).json({ error: "Internal server error" });
       }
     }
   );
@@ -122,7 +122,7 @@ const fetchUser = require("../middleware/FetchUser");
         //Catch An Error.
         
         console.error(error.message);
-        res.status(500).send("Internal server error");
+        res.status(500).json({ error: "Internal server error" });
       }
     }
   );
@@ -139,7 +139,7 @@ res.send(user)
    } catch (error) {
      //Catch An Error.
      console.error(error.message);
-     res.status(500).send("Internal server error");
+     res.status(500).json({ error: "Internal server error" });
    }
 
   });
