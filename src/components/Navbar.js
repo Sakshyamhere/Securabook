@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+
 function Navbar(props) {
+
   const navigate = useNavigate();
   const location = useLocation();
   const handelLogout = () => {
@@ -9,6 +11,8 @@ function Navbar(props) {
     navigate("/login")
   }
   useEffect(() => {}, [location]);
+
+
 
   return (
     <div>
@@ -117,7 +121,9 @@ function Navbar(props) {
 
               </div>
             </form>
-          <i class="fa-duotone fa-user"></i>
+           
+           {localStorage.getItem('token')&&(<Link className="nav-link fa-solid fa-circle-user fa-2xl mx-3" to="/userinfo"></Link>)}
+            
           </div>
         </div>
       </nav>

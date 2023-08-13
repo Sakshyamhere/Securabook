@@ -7,6 +7,7 @@ import { useState } from "react";
 import Alert from "./components/Alerts";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import { Userinfo } from "./components/Userinfo";
 
 function App() {
   const [mode, setmode] = useState("light");
@@ -45,22 +46,26 @@ function App() {
           <Alert alert={alert} />
           <div className="container my-3">
             <Routes>
-              
-           <Route
+              <Route
                 path="/"
                 element={<Home mode={mode} showAlert={showAlert} />}
               ></Route>
               <Route
                 path="about"
                 element={<About mode={mode} showAlert={showAlert} />}
-              ></Route> :
-               <Route
+              ></Route>{" "}
+              :
+              <Route
                 path="login"
                 element={<Login mode={mode} showAlert={showAlert} />}
               ></Route>
-               <Route
+              <Route
                 path="signup"
                 element={<Signup mode={mode} showAlert={showAlert} />}
+              ></Route>
+              <Route
+                path="userinfo"
+                element={<Userinfo mode={mode} showAlert={showAlert} />}
               ></Route>
             </Routes>
           </div>
