@@ -45,6 +45,17 @@ function Signup(props) {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
 
+  const [passType, setpassType] = useState('password')
+
+  const handelCheck = () => {
+    if (passType==='password') {
+        setpassType('text')
+    }
+    else {
+        setpassType('password')
+    }
+  }
+
   return (
     <div
       className={`container my-3 bg-${mode} text-${
@@ -102,7 +113,7 @@ function Signup(props) {
             Confirm Password
           </label>
           <input
-            type="password"
+            type={passType}
             name="cpassword"
             className="form-control"
             id="exampleInputPassword2"
@@ -111,7 +122,10 @@ function Signup(props) {
             minLength={8}
           />
         </div>
-
+        <div className="mb-3 form-check">
+    <input type="checkbox" onClick={handelCheck} class="form-check-input" id="exampleCheck1"/>
+    <label className="form-check-label" htmlFor="exampleCheck1">Show Password</label>
+  </div>
         <button
           disabled={
             newUser.password.length < 8 ||

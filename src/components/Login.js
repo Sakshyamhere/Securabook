@@ -37,6 +37,16 @@ function Login(props) {
   const handelOnChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+  const [passType, setpassType] = useState('password')
+
+  const handelCheck = () => {
+    if (passType==='password') {
+        setpassType('text')
+    }
+    else {
+        setpassType('password')
+    }
+  }
 
   return (
     <div
@@ -61,16 +71,20 @@ function Login(props) {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label my-2">
             Password
           </label>
           <input
             name="password"
-            type="password"
-            className="form-control"
+            type={passType}
+            className="form-control my-2"
             id="exampleInputPassword1"
             onChange={handelOnChange}
           />
+               <div className="mb-3 form-check">
+    <input type="checkbox" onClick={handelCheck} class="form-check-input" id="exampleCheck1"/>
+    <label className="form-check-label" htmlFor="exampleCheck1">Show Password</label>
+  </div>
         </div>
         <button type="submit" className="btn btn-primary">
           Log In

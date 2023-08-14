@@ -25,8 +25,14 @@ export const Userinfo = () => {
  
   return (
     <div>
-        <p>{user.email}</p>
-        <p>{user.name}</p>
+        <div className="form-floating mb-3">
+  <input type="email" className="form-control" id="floatingInputDisabled" placeholder="name@example.com" value={user.name} disabled/>
+  <label for="floatingInputDisabled">Username</label>
+</div>
+<div className="form-floating mb-3">
+  <input type="email" className="form-control" id="floatingInputDisabled" placeholder="name@example.com" value={user.email} disabled/>
+  <label for="floatingInputDisabled">Email address</label>
+</div>
     </div>
   )
 }
